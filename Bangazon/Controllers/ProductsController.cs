@@ -38,10 +38,28 @@ namespace Bangazon.Controllers
         }
 
         // GET: Products/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
+            var viewModel = new ProductFormViewModel();
+            var product = await _context.Product.Include(p => p.ProductType)
+                .FirstOrDefaultAsync(p => p.ProductId == id);
+            var user = await GetUserAsync();
           
-            return View();
+
+        
+            viewModel.DateCreated = product.DateCreated;
+            viewModel.Description = product.Description;
+            viewModel.Title = product.Title;
+            viewModel.Price = product.Price;
+            viewModel.Quantity = product.Quantity;
+            viewModel.UserId = product.UserId;
+            viewModel.City = product.City;
+            viewModel.ImagePath = product.ImagePath;
+            viewModel.Active = product.Active;
+            viewModel.ProductTypeId = product.ProductTypeId;
+            viewModel.ProductType = product.ProductType;
+          
+            return View(viewModel);
         }
 
         // GET: Products/Create
@@ -70,7 +88,6 @@ namespace Bangazon.Controllers
                 var product = new Product()
                 {
                     DateCreated = DateTime.Now,
-                    ProductId = productViewModel.ProductId,
                     Description = productViewModel.Description,
                     Title = productViewModel.Title,
                     Price = productViewModel.Price,
@@ -85,7 +102,9 @@ namespace Bangazon.Controllers
                 _context.Product.Add(product);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                var id = product.ProductId;
+
+                return RedirectToAction("Details", new { id = id });
             }
             catch (Exception ex)
             {
