@@ -82,12 +82,13 @@ hr {
 h1, h2, h3, h4, h5, h6 {
   margin-top: 30px;
   margin-bottom: 0.5rem;
-  color: white;
+  color: whitesmoke !important;
 }
 
 p {
   margin-top: 0;
   margin-bottom: 1rem;
+  color: whitesmoke !important;
 }
 
 abbr[title],
@@ -121,11 +122,13 @@ ul ol {
 
 dt {
   font-weight: 700;
+  color: whitesmoke !important;
 }
 
 dd {
-  margin-bottom: .5rem;
-  margin-left: 0;
+    margin-bottom: .5rem;
+    margin-left: 0;
+    color: whitesmoke !important;
 }
 
 blockquote {
@@ -162,14 +165,13 @@ sup {
 }
 
 a {
-  color: #007bff;
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
 }
 
 a:hover {
-  color: #0056b3;
+  color: whitesmoke;
   text-decoration: underline;
 }
 
@@ -229,12 +231,14 @@ caption {
 }
 
 th {
-  text-align: inherit;
+    text-align: inherit;
+    color: whitesmoke !important;
 }
 
 label {
   display: inline-block;
   margin-bottom: 0.5rem;
+  color: whitesmoke !important;
 }
 
 button {
@@ -424,10 +428,11 @@ h6, .h6 {
 }
 
 hr {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: whitesmoke !important;
 }
 
 small,
@@ -1524,9 +1529,10 @@ pre code {
 
 .table th,
 .table td {
-  padding: 0.75rem;
-  vertical-align: top;
-  border-top: 1px solid #dee2e6;
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    color: whitesmoke !important;
 }
 
 .table thead th {
@@ -2335,13 +2341,11 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary {
-    color: #fff;
     background-color: #B58900;
     border-color: #B58900;
 }
 
 .btn-primary:hover {
-  color: #fff;
   background-color: #0069d9;
   border-color: #0062cc;
 }
@@ -2358,7 +2362,6 @@ fieldset:disabled a.btn {
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
-  color: #fff;
   background-color: #0062cc;
   border-color: #005cbf;
 }
@@ -2369,13 +2372,11 @@ fieldset:disabled a.btn {
 }
 
 .btn-secondary {
-  color: #fff;
   background-color: #6c757d;
   border-color: #6c757d;
 }
 
 .btn-secondary:hover {
-  color: #fff;
   background-color: #5a6268;
   border-color: #545b62;
 }
@@ -2879,13 +2880,12 @@ fieldset:disabled a.btn {
 }
 
 .btn-link {
+  color: #B58900;
   font-weight: 400;
-  color: #007bff;
   background-color: transparent;
 }
 
 .btn-link:hover {
-  color: #0056b3;
   text-decoration: underline;
   background-color: transparent;
   border-color: transparent;
