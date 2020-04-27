@@ -29,6 +29,7 @@ namespace Bangazon.Controllers
             var order = await _context.Order
                 .Where(o => o.UserId == user.Id)
                 .Include(o => o.OrderProducts)
+                .ThenInclude(o => o.Product)
                 .ToListAsync();
 
             return View(order);
