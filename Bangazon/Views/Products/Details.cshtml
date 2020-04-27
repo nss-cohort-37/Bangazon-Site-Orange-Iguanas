@@ -70,6 +70,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-link" }) |
+    <button class="btn btn-primary">@Html.ActionLink("Add to Order", "Order", new { id = Model.ProductId })</button>
     <a class="btn btn-link" asp-action="Index">Back to List</a>
 </div>

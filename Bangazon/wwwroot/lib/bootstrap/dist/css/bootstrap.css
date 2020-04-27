@@ -165,9 +165,9 @@ sup {
 }
 
 a {
-  text-decoration: none;
-  background-color: transparent;
-  -webkit-text-decoration-skip: objects;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
 }
 
 a:hover {
