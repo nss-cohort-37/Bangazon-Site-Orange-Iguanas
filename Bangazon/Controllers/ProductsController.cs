@@ -40,77 +40,66 @@ namespace Bangazon.Controllers
             {
                 case "Sporting Goods":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 1)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Appliances":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 2)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Tools":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 3)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Games":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 4)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Music":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 5)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Health":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 6)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Outdoors":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 7)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Beauty":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 8)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Shoes":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 9)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Automotive":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Where(p => p.ProductTypeId == 10)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
                 case "Show All":
                     products = await _context.Product
-                        .Where(p => p.UserId == user.Id)
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
