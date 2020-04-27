@@ -9,6 +9,7 @@
 <div>
     <h4>Product</h4>
     <hr />
+
     <dl class="row">
 
         <dt class="col-sm-2">
@@ -68,8 +69,12 @@
             @Html.DisplayFor(model => model.ProductType.Label)
         </dd>
     </dl>
+   @using (Html.BeginForm("AddToOrder", "Products")) {
+        <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
+        <input type="submit" value="Add to Order" class="btn btn-primary" />
+   }
 </div>
 <div>
-    <button class="btn btn-primary">@Html.ActionLink("Add to Order", "Order", new { id = Model.ProductId })</button>
     <a class="btn btn-link" asp-action="Index">Back to List</a>
 </div>
+

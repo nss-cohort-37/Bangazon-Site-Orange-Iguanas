@@ -139,6 +139,7 @@ namespace Bangazon.Controllers
             viewModel.Active = product.Active;
             viewModel.ProductTypeId = product.ProductTypeId;
             viewModel.ProductType = product.ProductType;
+            viewModel.ProductId = product.ProductId;
 
             return View(viewModel);
         }
@@ -233,6 +234,28 @@ namespace Bangazon.Controllers
                 return View();
             }
         }
+
+        //POST: Products/AddToOrder
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddToOrder(int ProductId)
+        {
+            var user = await GetUserAsync();
+            var order = await _context.Order.FirstOrDefaultAsync(o => o.UserId == user.Id && o.PaymentTypeId == null);
+
+            var orderProduct = new OrderProduct()
+            {
+                OrderId = order.OrderId,
+                ProductId = ProductId,
+            };
+
+            _context.OrderProduct.Add(orderProduct);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
         // GET: Products/Delete/5
         public async Task<ActionResult> Delete(int id)

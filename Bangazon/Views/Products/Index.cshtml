@@ -26,7 +26,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.Title, "Details", "Products", new { id = item.ProductId })
+                    @Html.ActionLink(item.Title, "Details", "Products", new { id = item.ProductId }, new {@class = "btn btn-link" })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
