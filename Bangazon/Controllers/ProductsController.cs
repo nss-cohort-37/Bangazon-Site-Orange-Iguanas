@@ -27,7 +27,7 @@ namespace Bangazon.Controllers
             _userManager = userManager;
         }
         // GET: Products
-        public async Task<ActionResult> Index(string filter)
+        public async Task<ActionResult> Index(string filter, string searchString)
         {
             var user = await GetUserAsync();
             var products = await _context.Product
@@ -116,6 +116,15 @@ namespace Bangazon.Controllers
                     break;
             }
 
+
+            if (searchString != null)
+            {
+                products = await _context.Product
+                      .Where(p => p.Title.Contains(searchString) && p.Active == true || p.City.Contains(searchString) && p.Active == true)
+                      .Include(p => p.ProductType)
+                       .ToListAsync();
+                return View(products);
+            }
 
             return View(products);
         }
