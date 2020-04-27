@@ -23,11 +23,21 @@ namespace Bangazon.Controllers
         }
         public async Task<ActionResult> Index(string searchString)
         {
+            if(searchString != null) { 
             var products = await _context.Product
                   .Where(p => p.Title.Contains(searchString) && p.Active == true || p.City.Contains(searchString) && p.Active == true)
                   .Include(p => p.ProductType)
                    .ToListAsync();
             return View(products);
+            }
+            else
+            {
+                var products = await _context.Product
+                    .Where(p => p.Active == true)
+                    .Include(p => p.ProductType)
+                   .ToListAsync();
+                return View(products);
+            }
         }
 
         public IActionResult Privacy()
