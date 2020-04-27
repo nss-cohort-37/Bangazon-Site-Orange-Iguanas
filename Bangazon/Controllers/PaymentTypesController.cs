@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bangazon.Data;
 using Bangazon.Models;
-using Bangazon.Models.ProfileViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,74 +11,71 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bangazon.Controllers
 {
-    public class ProfilesController : Controller
+    public class PaymentTypesController : Controller
     {
+
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProfilesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public PaymentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
-
-
-
-        // GET: Profiles
+        // GET: PaymentTypes
         public async Task<ActionResult> Index()
         {
             var user = await GetUserAsync();
-
-            
-
-
-            var viewModel = new ProfileViewModel
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                StreetAddress = user.StreetAddress
-            };
-            return View(viewModel);
+            var paymentTypes = await _context.PaymentType
+                .Where(pt => pt.UserId == user.Id)
+                .ToListAsync();
+            return View(paymentTypes);
         }
 
-        // GET: Profiles/Details/5
+        // GET: PaymentTypes/Details/5
         public ActionResult Details(int id)
         {
-
             return View();
         }
 
-        // GET: Profiles/Create
+        // GET: PaymentTypes/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Profiles/Create
+        // POST: PaymentTypes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(PaymentType paymentTypeModel)
         {
             try
             {
-                // TODO: Add insert logic here
+                var user = await GetUserAsync();
+                var paymentType = new PaymentType()
+                {
+                    UserId = user.Id,
+                    Description = paymentTypeModel.Description,
+                    AccountNumber = paymentTypeModel.AccountNumber
+                };
+                _context.PaymentType.Add(paymentType);
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
         }
 
-        // GET: Profiles/Edit/5
+        // GET: PaymentTypes/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Profiles/Edit/5
+        // POST: PaymentTypes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -96,13 +92,13 @@ namespace Bangazon.Controllers
             }
         }
 
-        // GET: Profiles/Delete/5
+        // GET: PaymentTypes/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Profiles/Delete/5
+        // POST: PaymentTypes/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
