@@ -25,9 +25,17 @@ namespace Bangazon.Controllers
 
 
         // GET: Profiles
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var user = await GetUserAsync();
+            var viewModel = new ProfileViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                StreetAddress = user.StreetAddress
+            };
+            return View(viewModel);
         }
 
         // GET: Profiles/Details/5
