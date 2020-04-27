@@ -108,6 +108,12 @@ namespace Bangazon.Controllers
                         .Include(p => p.ProductType)
                         .ToListAsync();
                     break;
+                case "Show All":
+                    products = await _context.Product
+                        .Where(p => p.UserId == user.Id)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
             }
 
 

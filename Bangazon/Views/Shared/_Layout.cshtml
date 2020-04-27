@@ -63,6 +63,10 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <partial name="_FooterLinks" />
+            }
             &copy; 2020 Bangazon, Inc. <a asp-area="" asp-controller="Home" asp-action="Privacy"></a>
         </div>
     </footer>
