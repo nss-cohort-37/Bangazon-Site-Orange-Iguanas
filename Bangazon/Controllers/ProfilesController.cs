@@ -74,19 +74,38 @@ namespace Bangazon.Controllers
         }
 
         // GET: Profiles/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var user = await GetUserAsync();
+            var viewModel = new ProfileViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                StreetAddress = user.StreetAddress
+            };
+            return View(viewModel);
         }
 
         // POST: Profiles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, ProfileViewModel profileViewModel)
         {
             try
             {
-                // TODO: Add update logic here
+                var user = await GetUserAsync();
+
+                user.Id = profileViewModel.Id;
+                user.FirstName = profileViewModel.FirstName;
+                user.LastName = profileViewModel.LastName;
+                user.StreetAddress = profileViewModel.StreetAddress; 
+                
+
+
+
+                _context.ApplicationUsers.Update(user);
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
