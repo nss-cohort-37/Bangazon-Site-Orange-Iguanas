@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Bangazon.Controllers
 {
 
-   
+
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,13 +27,94 @@ namespace Bangazon.Controllers
             _userManager = userManager;
         }
         // GET: Products
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string filter, string searchString)
         {
             var user = await GetUserAsync();
             var products = await _context.Product
                  .Where(p => p.UserId == user.Id)
                  .Include(p => p.ProductType)
                   .ToListAsync();
+
+
+            switch (filter)
+            {
+                case "Sporting Goods":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 1)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Appliances":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 2)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Tools":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 3)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Games":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 4)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Music":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 5)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Health":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 6)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Outdoors":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 7)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Beauty":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 8)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Shoes":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 9)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Automotive":
+                    products = await _context.Product
+                        .Where(p => p.ProductTypeId == 10)
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+                case "Show All":
+                    products = await _context.Product
+                        .Include(p => p.ProductType)
+                        .ToListAsync();
+                    break;
+            }
+
+
+            if (searchString != null)
+            {
+                products = await _context.Product
+                      .Where(p => p.Title.Contains(searchString) && p.Active == true || p.City.Contains(searchString) && p.Active == true)
+                      .Include(p => p.ProductType)
+                       .ToListAsync();
+                return View(products);
+            }
+
             return View(products);
         }
 
@@ -44,9 +125,9 @@ namespace Bangazon.Controllers
             var product = await _context.Product.Include(p => p.ProductType)
                 .FirstOrDefaultAsync(p => p.ProductId == id);
             var user = await GetUserAsync();
-          
 
-        
+
+
             viewModel.DateCreated = product.DateCreated;
             viewModel.Description = product.Description;
             viewModel.Title = product.Title;
@@ -58,7 +139,7 @@ namespace Bangazon.Controllers
             viewModel.Active = product.Active;
             viewModel.ProductTypeId = product.ProductTypeId;
             viewModel.ProductType = product.ProductType;
-          
+
             return View(viewModel);
         }
 
