@@ -11,11 +11,12 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
@@ -34,29 +35,30 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ImagePath)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductType.Label)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }, new { @class = "btn btn-link" }) |
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "Details", "Products", new { id = item.ProductId }, new { @class = "btn btn-link" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImagePath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductType.Label)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }, new { @class = "btn btn-link" }) |
+            </td>
+        </tr>
         }
     </tbody>
 </table>
