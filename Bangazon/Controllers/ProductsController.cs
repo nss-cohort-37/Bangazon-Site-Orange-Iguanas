@@ -143,6 +143,24 @@ namespace Bangazon.Controllers
             return View(viewModel);
         }
 
+        // GET: Products/ProductTypes
+        public async Task<ActionResult> ProductTypes()
+        {
+            var model = new ProductTypesViewModel();
+            model.Types = await _context
+                .ProductType
+                .Select(pt => new TypeWithProducts()
+                {
+                    TypeId = pt.ProductTypeId,
+                    TypeName = pt.Label,
+                    ProductCount = pt.Products.Count(),
+                    Products = pt.Products.OrderByDescending(p => p.DateCreated).Take(3)
+                }).ToListAsync();
+
+            return View(model);
+        }
+
+
         // GET: Products/Create
         public async Task<ActionResult> Create()
         {
