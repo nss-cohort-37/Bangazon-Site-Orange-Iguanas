@@ -1,0 +1,62 @@
+﻿@model Bangazon.Models.OrderViewModels.CompleteOrderChoosePaymentTypeViewModel
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Complete Order</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Price
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Order.OrderProducts)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.Product.Title, "Details", "Products", new { id = item.ProductId }, new { @class = "btn btn-link" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Price)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    Total Price
+                </td>
+                <td>
+                   $@Model.TotalPrice
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <form asp-action="CompleteOrder">
+        <div class="form-group">
+            <input type="hidden" asp-for="Order.OrderId" value="@Model.Order.OrderId" />
+            <label asp-for="Order.PaymentTypeId" class="control-label">Payment Type</label>
+            <select asp-for="Order.PaymentTypeId" class="form-control" asp-items="@Model.ListOfPaymentTypes">
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Complete Order" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
