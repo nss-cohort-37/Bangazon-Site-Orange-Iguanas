@@ -69,7 +69,7 @@
             @Html.DisplayFor(model => model.ProductType.Label)
         </dd>
     </dl>
-   @using (Html.BeginForm("AddToOrder", "Products")) {
+   @using (Html.BeginForm("AddToOrder", "Cart")) {
         <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
         <input type="submit" value="Add to Order" class="btn btn-primary" />
    }
