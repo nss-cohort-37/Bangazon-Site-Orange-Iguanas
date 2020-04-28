@@ -255,6 +255,34 @@ namespace Bangazon.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //POST: Products/UserLikePreference
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UserLikePreference(int ProductId, bool liked)
+        {
+            var user = await GetUserAsync();
+            var currentPreference = await _context.UserProducts.FirstOrDefaultAsync(p => p.ProductId == ProductId && p.UserId == user.Id);
+            if (currentPreference == null)
+            {
+                var userProduct = new UserProduct()
+                {
+                    UserId = user.Id,
+                    ProductId = ProductId,
+                    IsLiked = liked
+                };
+                _context.UserProducts.Add(userProduct);
+
+            }else
+            {
+                currentPreference.IsLiked = liked;
+                _context.UserProducts.Update(currentPreference);
+            }
+       
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = ProductId });
+        }
+
 
 
         // GET: Products/Delete/5
