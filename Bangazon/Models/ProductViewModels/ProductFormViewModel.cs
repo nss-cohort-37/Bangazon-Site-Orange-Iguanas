@@ -9,5 +9,6 @@ namespace Bangazon.Models.ProductViewModels
     public class ProductFormViewModel : Product
     {
         public List<SelectListItem> ProductTypeOptions { get; set; }
+        public bool IsLiked { get; set; }
     }
 }
