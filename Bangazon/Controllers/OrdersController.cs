@@ -28,6 +28,7 @@ namespace Bangazon.Controllers
         public async Task<ActionResult> Index()
         {
             var user = await GetUserAsync();
+
             var order = await _context.Order
                 .Where(o => o.UserId == user.Id)
                 .Include(o => o.OrderProducts)
@@ -107,8 +108,9 @@ namespace Bangazon.Controllers
 
             var order = await _context.Order.FirstOrDefaultAsync(o => o.OrderId == viewModel.Order.OrderId);
 
-            order.PaymentTypeId = viewModel.Order.PaymentTypeId;
-            order.DateCompleted = DateTime.Now;
+                order.PaymentTypeId = viewModel.Order.PaymentTypeId;
+
+                order.DateCompleted = DateTime.Now;
 
             _context.Order.Update(order);
 
@@ -149,9 +151,22 @@ namespace Bangazon.Controllers
         }
 
         // GET: Orders/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var user = await GetUserAsync();
+
+            var order = await _context.Order
+               .FirstOrDefaultAsync(o => o.UserId == user.Id && o.PaymentTypeId == null);
+
+            var deletedProduct = await _context.OrderProduct
+                .FirstOrDefaultAsync(p => p.ProductId == id && p.OrderId == order.OrderId);
+
+            _context.OrderProduct.Remove(deletedProduct);
+            await _context.SaveChangesAsync();
+
+
+
+            return RedirectToAction(nameof(Cart));
         }
 
         // POST: Orders/Delete/5

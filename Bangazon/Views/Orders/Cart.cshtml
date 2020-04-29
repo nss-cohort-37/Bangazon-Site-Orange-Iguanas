@@ -31,6 +31,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Product.Price)
                     </td>
+                    <td>
+                        @Html.ActionLink("Remove From Cart", "Delete", "Orders", new { id = item.ProductId }, new { @class = "btn btn-link" })
+                    </td>
                 </tr>
             }
             <tr>
@@ -38,7 +41,7 @@
                     Total Price
                 </td>
                 <td>
-                   $@Model.TotalPrice
+                    $@Model.TotalPrice
                 </td>
             </tr>
         </tbody>
