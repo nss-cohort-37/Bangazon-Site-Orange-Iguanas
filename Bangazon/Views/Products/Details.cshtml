@@ -1,27 +1,34 @@
 ﻿@model Bangazon.Models.ProductViewModels.ProductFormViewModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
+    var currentUser = await UserManager.GetUserAsync(User);
 }
 
-<h1>Details</h1>
+<div class="likeButtonsContainer">
+    <h1> @Html.DisplayFor(model => model.Title)</h1>
+    @using (Html.BeginForm("UserLikePreference", "Products"))
+    {<div class="likeButton">
+            <input asp-for="IsLiked" type="hidden" name="liked" value="True" class="form-control" />
+            <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
+            <input type="submit" value="Like" class="btn btn-primary" />
+        </div>
+    }
+    @using (Html.BeginForm("UserLikePreference", "Products"))
+    {
+        <div class="likeButton">
+            <input asp-for="IsLiked" type="hidden" name="liked" value="False" class="form-control" />
+            <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
+            <input type="submit" value="Dislike" class="btn btn-primary" />
+        </div>
+    }
+</div>
 
 <div>
-    <h4>Product</h4>
-    <hr />
 
-    @using (Html.BeginForm("UserLikePreference", "Products"))
-    {
-        <input asp-for="IsLiked" type="hidden" name="liked" value="True" class="form-control" />
-        <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
-        <input type="submit" value="Like" class="btn btn-primary" />
-    }
-    @using (Html.BeginForm("UserLikePreference", "Products"))
-    {
-        <input asp-for="IsLiked" type="hidden" name="liked" value="False" class="form-control" />
-        <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
-        <input type="submit" value="Dislike" class="btn btn-primary" />
-    }
+    <hr />
 
     <dl class="row">
 
@@ -32,18 +39,11 @@
             @Html.DisplayFor(model => model.DateCreated)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
@@ -56,19 +56,16 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Quantity)
         </dd>
+        @if (Model.City != null)
+        {
+            <dt class="col-sm-2">
+                Location
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.City)
+            </dd>
+        }
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Active)
         </dt>
@@ -82,13 +79,16 @@
             @Html.DisplayFor(model => model.ProductType.Label)
         </dd>
     </dl>
-    @using (Html.BeginForm("AddToOrder", "Products"))
+    @if (Model.UserId != currentUser.Id)
     {
-        <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
-        <input type="submit" value="Add to Order" class="btn btn-primary" />
+        @using (Html.BeginForm("AddToOrder", "Products"))
+        {
+            <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
+            <input type="submit" value="Add to Order" class="btn btn-primary" />
+        }
     }
 </div>
 <div>
-    <a class="btn btn-link" asp-action="Index">Back to List</a>
+    <a class="btn btn-link" asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
 

@@ -3,18 +3,21 @@
 @{
     ViewData["Title"] = "Product Types";
 }
-<br/>
+<br />
 <h1>Product Types</h1>
-
-@foreach (var item in Model.Types)
-{
-<h4>@Html.DisplayFor(modelItem => item.TypeName) (@item.ProductCount)</h4>
-    <ul>
-        @foreach(var product in item.Products)
-        {
-        <li>@Html.ActionLink(product.Title, "Details", new { id = product.ProductId }, new { @class = "btn btn-link" })</li>
-        }
-    </ul>
-            
-           
-}
+<div class="productTypeCardContainer">
+    @foreach (var item in Model.Types)
+    {
+        <div class="card text-white bg-primary mb-3 productTypeCard" style="max-width: 20rem;">
+            <div class="card-header">@Html.DisplayFor(modelItem => item.TypeName) (@item.ProductCount)</div>
+            <div class="card-body">
+                <ul class="card-text">
+                    @foreach (var product in item.Products)
+                    {
+                        <li>@Html.ActionLink(product.Title, "Details", new { id = product.ProductId }, new { @class = "linkColor" })</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+</div>

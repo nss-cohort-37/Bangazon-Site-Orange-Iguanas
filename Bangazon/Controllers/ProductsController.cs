@@ -161,6 +161,19 @@ namespace Bangazon.Controllers
             return View(model);
         }
 
+        // GET: Products/Favorites
+        public async Task<ActionResult> Favorites()
+        {
+            var user = await GetUserAsync();
+            var favorites = await _context.UserProducts
+                .Where(up => up.UserId == user.Id && up.IsLiked == true)
+                .Include(p => p.Product)
+                .ToListAsync();
+
+            return View(favorites);
+        }
+
+
 
         // GET: Products/Create
         public async Task<ActionResult> Create()
@@ -283,7 +296,25 @@ namespace Bangazon.Controllers
             return RedirectToAction("Details", new { id = ProductId });
         }
 
+        // POST: Products/RemoveFavorite/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RemoveFavorite(UserProduct product)
+        {
+            try
+            {
+                var userProduct = await _context.UserProducts.FirstOrDefaultAsync(up => up.UserProductId == product.UserProductId);
 
+                _context.UserProducts.Remove(userProduct);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Favorites));
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
 
         // GET: Products/Delete/5
         public async Task<ActionResult> Delete(int id)

@@ -47,9 +47,30 @@ input[type="checkbox"]:checked ~ .reveal-if-active {
     overflow: visible;
 }
 
+.likeButtonsContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.likeButton {
+    margin-left: 20px;
+    margin-bottom: 8px;
+    margin-top: 40px;
+}
 
 .linkColor {
     color: whitesmoke !important;
+}
+
+.productTypeCardContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.productTypeCard{
+    flex-basis: 30%;
+    margin: 25px;
 }
 
 *,
@@ -4396,7 +4417,7 @@ input[type="button"].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #839496;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;

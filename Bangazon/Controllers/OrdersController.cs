@@ -107,12 +107,17 @@ namespace Bangazon.Controllers
             var user = await GetUserAsync();
 
             var order = await _context.Order.FirstOrDefaultAsync(o => o.OrderId == viewModel.Order.OrderId);
-
                 order.PaymentTypeId = viewModel.Order.PaymentTypeId;
-
                 order.DateCompleted = DateTime.Now;
 
             _context.Order.Update(order);
+
+            var orderProducts = await _context.OrderProduct.Include(p=> p.Product).Where(op => op.OrderId == order.OrderId).ToListAsync();
+            foreach(var op in orderProducts)
+            {
+                op.Product.Quantity = op.Product.Quantity - 1;
+                _context.Product.Update(op.Product);
+            }
 
             var newOrder = new Order()
             {

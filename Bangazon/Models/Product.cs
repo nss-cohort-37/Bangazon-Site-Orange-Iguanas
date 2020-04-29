@@ -38,6 +38,7 @@ namespace Bangazon.Models
 
         [Required]
         public string UserId {get; set;}
+        [Display(Name = "Location")]
 
         public string City {get; set;}
 
