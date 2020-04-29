@@ -35,17 +35,17 @@
                 <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="LocalDelivery" /> @Html.DisplayNameFor(model => model.LocalDelivery)
-                </label>
-            </div>
-            @if()
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" asp-for="LocalDelivery" id="localDelivery" checked="">
+                <label class="custom-control-label" for="localDelivery">@Html.DisplayNameFor(model => model.LocalDelivery)</label>
+            
+                <div class="reveal-if-active form-group">
+                    <br/>
+                     <label asp-for="City" class="control-label"></label>
+                     <input asp-for="City" class="form-group"  />
+                     <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+             </div>
             <div class="form-group">
                 <label asp-for="ImagePath" class="control-label"></label>
                 <input asp-for="ImagePath" class="form-control" />
