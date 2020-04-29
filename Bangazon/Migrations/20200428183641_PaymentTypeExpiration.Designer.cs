@@ -4,14 +4,16 @@ using Bangazon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200428183641_PaymentTypeExpiration")]
+    partial class PaymentTypeExpiration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,6 +217,7 @@ namespace Bangazon.Migrations
                         .HasMaxLength(55);
 
                     b.Property<DateTime>("Expiration")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
