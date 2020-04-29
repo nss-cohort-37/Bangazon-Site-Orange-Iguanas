@@ -23,6 +23,11 @@
                 <span asp-validation-for="AccountNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Expiration" class="control-label"></label>
+                <input type="date" asp-for="Expiration" class="form-control" />
+                <span asp-validation-for="Expiration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -30,7 +35,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">View Payment Types</a>
+    <a class="btn btn-link" asp-action="Index">View Payment Types</a>
 </div>
 
 @section Scripts {

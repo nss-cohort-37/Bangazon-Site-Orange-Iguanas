@@ -6,7 +6,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bangazon.Models
 {
-  public class PaymentType
+    public class MyDateAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            DateTime d = Convert.ToDateTime(value);
+            return d >= DateTime.Now; //Dates Greater than or equal to today are valid (true)
+        }
+    }
+
+
+    public class PaymentType
   {
     [Key]
     public int PaymentTypeId { get; set; }
@@ -23,6 +33,11 @@ namespace Bangazon.Models
     [Required]
     [StringLength(20)]
     public string AccountNumber { get; set; }
+
+    [Required]
+    [DataType(DataType.Date)]
+    [MyDate(ErrorMessage = "Invalid date")]
+    public DateTime Expiration { get; set; }
 
     [Required]
     public string UserId {get; set;}
