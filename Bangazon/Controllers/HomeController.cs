@@ -35,6 +35,7 @@ namespace Bangazon.Controllers
                 var products = await _context.Product
                     .Where(p => p.Active == true)
                     .Include(p => p.ProductType)
+                    .OrderByDescending(p=>p.DateCreated).Take(20)
                    .ToListAsync();
                 return View(products);
             }
@@ -52,3 +53,4 @@ namespace Bangazon.Controllers
         }
     }
 }
+
