@@ -262,10 +262,15 @@ namespace Bangazon.Controllers
                 ProductId = ProductId,
             };
 
+            var prod = await _context.Product.FirstOrDefaultAsync(p => p.ProductId == ProductId);
+            prod.Quantity = prod.Quantity - 1;
+
             _context.OrderProduct.Add(orderProduct);
+            _context.Product.Update(prod);
+
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         //POST: Products/UserLikePreference

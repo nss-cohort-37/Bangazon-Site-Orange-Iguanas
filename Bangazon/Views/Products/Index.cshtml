@@ -24,21 +24,31 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "Details", "Products", new { id = item.ProductId }, new { @class = "btn btn-link" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            @if (item.Quantity == 0)
+            {
+                <td>Item Out of Stock</td>
+            }
+            else
+            {
                 <td>
-                    @Html.ActionLink(item.Title, "Details", "Products", new { id = item.ProductId }, new {@class = "btn btn-link" })
+                    @Html.DisplayFor(model => item.Quantity)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ProductId }, new { @class = "btn btn-link" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductId }, new { @class = "btn btn-link" })
-                </td>
-            </tr>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ProductId }, new { @class = "btn btn-link" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId }, new { @class = "btn btn-link" })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

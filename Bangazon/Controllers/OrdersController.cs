@@ -112,12 +112,6 @@ namespace Bangazon.Controllers
 
             _context.Order.Update(order);
 
-            var orderProducts = await _context.OrderProduct.Include(p=> p.Product).Where(op => op.OrderId == order.OrderId).ToListAsync();
-            foreach(var op in orderProducts)
-            {
-                op.Product.Quantity = op.Product.Quantity - 1;
-                _context.Product.Update(op.Product);
-            }
 
             var newOrder = new Order()
             {
@@ -166,7 +160,11 @@ namespace Bangazon.Controllers
             var deletedProduct = await _context.OrderProduct
                 .FirstOrDefaultAsync(p => p.ProductId == id && p.OrderId == order.OrderId);
 
+            var prod = await _context.Product.FirstOrDefaultAsync(p => p.ProductId == id);
+            prod.Quantity = prod.Quantity + 1;
+
             _context.OrderProduct.Remove(deletedProduct);
+            _context.Product.Update(prod);
             await _context.SaveChangesAsync();
 
 
