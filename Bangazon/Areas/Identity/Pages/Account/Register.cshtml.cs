@@ -10,23 +10,27 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Bangazon.Data;
 
 namespace Bangazon.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
+            ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
@@ -79,11 +83,12 @@ namespace Bangazon.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {
+                var user = new ApplicationUser
+                {
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     StreetAddress = Input.StreetAddress,
-                    UserName = Input.Email, 
+                    UserName = Input.Email,
                     Email = Input.Email
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -102,6 +107,15 @@ namespace Bangazon.Areas.Identity.Pages.Account
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    var order = new Order()
+                    {
+                        UserId = user.Id
+                    };
+
+                    _context.Order.Add(order);
+                    await _context.SaveChangesAsync();
+
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
