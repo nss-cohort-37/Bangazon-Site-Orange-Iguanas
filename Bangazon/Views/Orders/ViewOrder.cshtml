@@ -1,0 +1,49 @@
+﻿@model Bangazon.Models.OrderViewModels.ViewOrderViewModel
+
+@{
+    ViewData["Title"] = "ViewOrder";
+}
+
+<h1>View Order</h1>
+
+<div>
+    <h4>Previous Order</h4>
+    <hr />
+    <table class="table">
+        <thead> 
+            <tr>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Price
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Order.OrderProducts)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.Product.Title, "Details", "Products", new { id = item.ProductId }, new { @class = "btn btn-link" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Price)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    Total Price
+                </td>
+                <td>
+                    $@Model.TotalPrice
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

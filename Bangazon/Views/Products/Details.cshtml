@@ -9,18 +9,20 @@
 <div>
     <h4>Product</h4>
     <hr />
+
     @using (Html.BeginForm("UserLikePreference", "Products"))
     {
         <input asp-for="IsLiked" type="hidden" name="liked" value="True" class="form-control" />
         <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
         <input type="submit" value="Like" class="btn btn-primary" />
-        }
+    }
     @using (Html.BeginForm("UserLikePreference", "Products"))
     {
-        <input asp-for="IsLiked" type="hidden" name="liked" value="False"  class="form-control" />
+        <input asp-for="IsLiked" type="hidden" name="liked" value="False" class="form-control" />
         <input asp-for="ProductId" type="hidden" value="@Model.ProductId" class="form-control" />
         <input type="submit" value="Dislike" class="btn btn-primary" />
-}
+    }
+
     <dl class="row">
 
         <dt class="col-sm-2">
