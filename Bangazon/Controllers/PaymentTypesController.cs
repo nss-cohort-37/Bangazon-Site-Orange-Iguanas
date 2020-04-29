@@ -53,7 +53,7 @@ namespace Bangazon.Controllers
 
             try
             {
-                if (ModelState.IsValid)
+                if (paymentTypeModel.Expiration > DateTime.Now)
                 {
                     var user = await GetUserAsync();
                     var paymentType = new PaymentType()
