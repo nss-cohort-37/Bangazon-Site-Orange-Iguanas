@@ -9,6 +9,7 @@ namespace Bangazon.Models
   public class Order
   {
     [Key]
+    [Display(Name ="Order Number")]
     public int OrderId {get;set;}
 
     [Required]
@@ -17,7 +18,9 @@ namespace Bangazon.Models
     public DateTime DateCreated {get;set;}
 
     [DataType(DataType.Date)]
-    public DateTime? DateCompleted {get;set;}
+        [Display(Name = "Purchase Date")]
+
+        public DateTime? DateCompleted {get;set;}
 
     [Required]
     public string UserId {get; set;}

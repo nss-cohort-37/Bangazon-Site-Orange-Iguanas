@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Bangazon.Models.UserProduct>
+
+@{
+    ViewData["Title"] = "Favorites";
+}
+<br />
+<h1>My Favorites</h1>
+
+@foreach (var product in Model)
+{
+    <div class="card text-white bg-primary mb-3 productTypeCard" style="max-width: 20rem;">
+        <div class="card-header ">@Html.ActionLink(product.Product.Title, "Details", new {id = product.Product.ProductId}, new { @class = "linkColor" })</div>
+        <div class="card-body">
+            <p class="card-text">@product.Product.Description</p>
+            <p class="card-text">@product.Product.Price</p>
+            <form asp-action="RemoveFavorite">
+                <input type="hidden" asp-for="@product.UserProductId"/>
+                <input value="Remove From Favorites" type="submit" class="btn btn-secondary" />
+            </form>
+        </div>
+    </div>
+            
+ }

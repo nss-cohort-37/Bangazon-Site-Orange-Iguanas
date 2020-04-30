@@ -128,7 +128,7 @@ namespace Bangazon.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
         private async Task<ApplicationUser> GetUserAsync() => await _userManager.GetUserAsync(HttpContext.User);

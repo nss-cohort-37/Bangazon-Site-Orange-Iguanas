@@ -107,12 +107,11 @@ namespace Bangazon.Controllers
             var user = await GetUserAsync();
 
             var order = await _context.Order.FirstOrDefaultAsync(o => o.OrderId == viewModel.Order.OrderId);
-
                 order.PaymentTypeId = viewModel.Order.PaymentTypeId;
-
                 order.DateCompleted = DateTime.Now;
 
             _context.Order.Update(order);
+
 
             var newOrder = new Order()
             {
@@ -161,7 +160,11 @@ namespace Bangazon.Controllers
             var deletedProduct = await _context.OrderProduct
                 .FirstOrDefaultAsync(p => p.ProductId == id && p.OrderId == order.OrderId);
 
+            var prod = await _context.Product.FirstOrDefaultAsync(p => p.ProductId == id);
+            prod.Quantity = prod.Quantity + 1;
+
             _context.OrderProduct.Remove(deletedProduct);
+            _context.Product.Update(prod);
             await _context.SaveChangesAsync();
 
 
